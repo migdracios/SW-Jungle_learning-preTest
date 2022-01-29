@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            title
+        </title>
+        <style>
+
+        </style>
+        <script>
+            // 문제 Q1. 1부터 n까지의 합을 구하는 함수
+
+            // 알고리즘 : 
+            //         n이 주어져 있을 때,
+
+            //         더한 결과를 저장할 수 있는 변수를 만들고
+            //         이 변수에 1, 2, 3, . . ., n까지 순서대로 더한다.
+            //         결과 변수를 돌려준다.
+
+            // 의사코드(pseudocode) : 
+
+            //         n이 주어지면, 
+
+            //         sum은 0에서 시작
+            //         i가 1부터 n까지 커지는 동안
+            //         sum에 1을 더한다.
+            //         sum을 반환한다.
+
+            // code
+                        let n = 10
+
+                        let sum = 0
+                        for (let i=1;i<=n;i++) {
+                            sum += i
+                        }
+                        console.log(sum)    // 55
+
+            // function
+
+                        function add_num(n) {
+                            let sum = 0
+                            for (let i=1;i<=n;i++){
+                                sum += i
+                            }
+                            return sum
+                        }
+
+        </script>
+    </head>
+    <body>
+        
+    </body>
+</html>

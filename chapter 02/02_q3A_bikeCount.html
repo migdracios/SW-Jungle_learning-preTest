@@ -1,0 +1,12 @@
+function show_names(num){
+	for (let i = 0; i < bikes.length; i++) {
+		if (bikes[i]['parkingBikeTotCnt'] <= num) {
+				let station = bikes[i]['stationName'];
+				console.log(num + "대 이하 정류장 : " + station);
+		}
+	}
+}
+
+// 이러면 아래와 같은 것이 가능!
+show_names(10) // 10개 이하 주차된 정류소만 출력!
+show_names(5) // 5개 이하 주차된 정류소만 출력!
