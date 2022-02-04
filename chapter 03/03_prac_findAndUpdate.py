@@ -65,4 +65,4 @@ t_movies = list(db.movies.find({'star': target_star}))
 
 # 매트릭스 영화 평점을 0으로 만들기
 
-db.movies.update_one({'title':'매트릭스'},{'$set':{'star':0}})
+# db.movies.update_one({'title':'매트릭스'},{'$set':{'star':0}})
