@@ -27,6 +27,78 @@
 
     </script>
 
+    <script>
+        $(document).ready(function () {
+                showMemo();
+            });
+
+            function makeMemo() {
+                let title = $('#memo-title').val()
+                let content = $('#memo-content').val()
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/memo_2",
+                    data: {title_give:title,content_give:content},
+                    success: function (response) {
+                        alert(response["msg"]);
+                        window.location.reload();
+                    }
+                })
+            }
+
+            function showMemo() {
+                $.ajax({
+                    type: "GET",
+                    url: "/memo_2",
+                    data: {},
+                    success: function (response) {
+                        let memos = response['all_memo']
+                        for (let i=0; i < memos.length; i++) {
+                            let title = memos[i]['title']
+                            let content = memos[i]['content']
+
+                            let temp_html=`<div class="card">
+                                                    <p class="card-title" id="title_card">${title}</p>
+                                                    <p class="card-text" id="text_card">${content}</p>
+                                                    <div class="card-btn">
+                                                        <button type="button" class="btn btn-info card-btn-box">수정</button><button type="button"
+                                                            class="btn btn-danger card-btn-box" onclick="deleteMemo()">삭제</button>
+                                                    </div>
+                                                </div>`
+
+                            
+                            $('#memo-card').append(temp_html)
+                            
+                        }
+                    }
+                })
+            }
+
+            function deleteMemo() {
+                let title2 = $('#title_card').val()
+                let content2 = $('#text_card').val()
+                
+
+                // 1. 서버에 1) POST 방식으로, 2) /api/delete 라는 url에, 3) name_give라는 이름으로 name을 전달합니다.
+                // 참고) POST 방식이므로 data: {'name_give': name} 과 같은 양식이 되어야합니다!
+                $.ajax({
+                    type: "POST",
+                    url: "/memo_2",
+                    data: {title_give:title2},
+                    success: function (response) {
+                        if (response['result'] == 'success') {
+                            // 2. '삭제 완료! 안녕!' 얼럿을 띄웁니다.
+                            alert(reponse['msg']);
+                            // 3. 변경된 정보를 반영하기 위해 새로고침합니다.
+                            window.location.reload()
+                        }
+                    }
+                });
+            }
+    </script>
+
     <style type="text/css">
         * {
             font-family: 'Jua', sans-serif;
@@ -81,6 +153,7 @@
             height: 180px;
             margin: 20px 0px 20px 10px;
             float: left;
+            display: block;
         }
 
         .card-btn {
@@ -144,46 +217,28 @@
                 <!-- 제목과 내용을 입력하는 div -->
                 <div class="inputWrap">
                     <!-- 제목 입력 div -->
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="제목을 입력하세요" aria-label="Username"
+                    <div class="input-group mb-3" >
+                        <input id="memo-title" type="text" class="form-control" placeholder="제목을 입력하세요" aria-label="Username"
                             aria-describedby="basic-addon1">
                     </div>
                     <!-- 간격 띄우기 위한 p태그 -->
                     <p></p>
                     <!-- 내용 입력 div -->
-                    <div class="input-group">
-                        <textarea class="form-control" placeholder="내용을 입력하세요" aria-label="With textarea"></textarea>
+                    <div class="input-group" >
+                        <textarea id="memo-content" class="form-control" placeholder="내용을 입력하세요" aria-label="With textarea"></textarea>
                     </div>
                     <!-- 저장하기 버튼 -->
-                    <button type="button" class="btn btn-primary saveBtn">저장하기</button>
+                    <button onclick="makeMemo()" type="button" class="btn btn-primary saveBtn">저장하기</button>
                 </div>
             </div>
         </div>
         <!-- 하단부 카드리스트 div -->
         <div id="#card-list" style="margin-top: 50px;">
             <!-- 카드 하나 전체 div -->
-            <div class="card">
-                <!-- 제목 입력 -->
-                <p class="card-title">첫번째 제목을 입력합니다</p>
-                <!-- 내용 입력 -->
-                <p class="card-text">첫번째 내용을 입력합니다</p>
-                <!-- 수정, 삭제 버튼 -->
-                <div class="card-btn">
-                    <button type="button" class="btn btn-info card-btn-box">수정</button><button type="button"
-                        class="btn btn-danger card-btn-box">삭제</button>
-                </div>
+            <div id="memo-card">
+                
             </div>
-            <div class="card">
-                <!-- 제목 입력 -->
-                <p class="card-title">첫번째 제목을 입력합니다</p>
-                <!-- 내용 입력 -->
-                <p class="card-text">첫번째 내용을 입력합니다</p>
-                <!-- 수정, 삭제 버튼 -->
-                <div class="card-btn">
-                    <button type="button" class="btn btn-info card-btn-box">수정</button><button type="button"
-                        class="btn btn-danger card-btn-box">삭제</button>
-                </div>
-            </div>
+            
             <!-- 카드 수정 전체 div -->
             <div class="card" style="height: 230px;">
                 <div class="inputWrap">
